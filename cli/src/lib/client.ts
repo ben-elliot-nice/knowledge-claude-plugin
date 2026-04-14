@@ -45,10 +45,7 @@ export class ExpertClient {
       method: 'DELETE',
       headers: { 'X-Deki-Token': this.token }
     })
-    if (!res.ok) {
-      const text = await res.text()
-      throw new Error(`${res.status}: ${text}`)
-    }
+    await this.parseResponse(res)
   }
 
   private async parseResponse(res: Response): Promise<unknown> {

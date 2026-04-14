@@ -36,6 +36,13 @@ describe('ExpertClient.get', () => {
     expect(result.page.title).toBe('Hello')
   })
 
+  it('preserves XML attributes with @_ prefix', async () => {
+    vi.stubGlobal('fetch', mockFetch('<page id="42"><title>Hello</title></page>'))
+    const client = makeClient(env)
+    const result = await client.get('/pages/=home') as any
+    expect(result.page['@_id']).toBe('42')
+  })
+
   it('throws on non-OK response', async () => {
     vi.stubGlobal('fetch', mockFetch('<error>Not found</error>', 404))
     const client = makeClient(env)
@@ -57,13 +64,14 @@ describe('ExpertClient.post', () => {
 })
 
 describe('ExpertClient.put', () => {
-  it('sends PUT with body', async () => {
+  it('sends PUT with body and correct content-type', async () => {
     const fetchMock = mockFetch('<tags />')
     vi.stubGlobal('fetch', fetchMock)
     const client = makeClient(env)
     await client.put('/pages/1/tags', '<tags><tag value="article:reference" /></tags>')
     const [, opts] = fetchMock.mock.calls[0]
     expect(opts.method).toBe('PUT')
+    expect(opts.headers['Content-Type']).toBe('application/xml; charset=utf-8')
   })
 })
 
