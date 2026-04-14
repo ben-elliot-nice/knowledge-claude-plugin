@@ -111,6 +111,17 @@ describe('pages.update', () => {
     expect(result.updated).toBe(true)
   })
 
+  it('updates type only (no --body) using pre-fetched pageId', async () => {
+    const client = makeClient({ get: vi.fn().mockResolvedValue(REAL_PAGE) })
+    const result = await pages.update!('', { path: '/home/Cat/Page', type: 'topic-guide' }, client, env) as any
+    expect(client.post).not.toHaveBeenCalled()
+    expect(client.put).toHaveBeenCalledTimes(1)
+    const putCall = (client.put as ReturnType<typeof vi.fn>).mock.calls[0]
+    expect(putCall[1]).toContain('article:topic-guide')
+    expect(result.updated).toBe(true)
+    expect(result.id).toBe('42')
+  })
+
   it('throws when neither --body nor --type provided', async () => {
     const client = makeClient({ get: vi.fn().mockResolvedValue(REAL_PAGE) })
     await expect(pages.update!('', { path: '/home/Cat/Page' }, client, env)).rejects.toThrow('--body or --type is required')
