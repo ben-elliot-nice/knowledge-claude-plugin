@@ -95,4 +95,7 @@ async function main() {
   }
 }
 
-main()
+main().catch(e => {
+  console.error((e as Error).message ?? String(e))
+  process.exit(1)
+})
