@@ -31,7 +31,7 @@ At least one of `--body` or `--type` is required.
 ## Example
 
 ```bash
-npx tsx cli/src/index.ts update pages \
+npx tsx <plugin-root>/cli/src/index.ts update pages \
   --path /home/MyCategory/MyGuide/getting-started \
   --body ./getting-started-v2.md
 ```

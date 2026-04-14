@@ -30,5 +30,5 @@ Always confirm: "This will permanently delete `<path>` from Expert. Are you sure
 ## Example
 
 ```bash
-npx tsx cli/src/index.ts delete pages --path /home/MyCategory/MyGuide/old-page
+npx tsx <plugin-root>/cli/src/index.ts delete pages --path /home/MyCategory/MyGuide/old-page
 ```

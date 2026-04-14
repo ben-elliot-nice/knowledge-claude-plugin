@@ -39,11 +39,11 @@ npx tsx <plugin-root>/cli/src/index.ts invoke pages \
 
 ```bash
 # Move a page
-npx tsx cli/src/index.ts invoke pages --path /home/OldCat/Page --op move --to /home/NewCat
+npx tsx <plugin-root>/cli/src/index.ts invoke pages --path /home/OldCat/Page --op move --to /home/NewCat
 
 # Copy a page
-npx tsx cli/src/index.ts invoke pages --path /home/Cat/Page --op copy --to /home/Cat/Page-backup
+npx tsx <plugin-root>/cli/src/index.ts invoke pages --path /home/Cat/Page --op copy --to /home/Cat/Page-backup
 
 # Revert to previous revision
-npx tsx cli/src/index.ts invoke pages --path /home/Cat/Page --op revert
+npx tsx <plugin-root>/cli/src/index.ts invoke pages --path /home/Cat/Page --op revert
 ```

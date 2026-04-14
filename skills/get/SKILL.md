@@ -26,5 +26,5 @@ npx tsx <plugin-root>/cli/src/index.ts get pages --path <full-page-path>
 ## Example
 
 ```bash
-npx tsx cli/src/index.ts get pages --path /home/MyCategory/MyGuide/MyPage
+npx tsx <plugin-root>/cli/src/index.ts get pages --path /home/MyCategory/MyGuide/MyPage
 ```

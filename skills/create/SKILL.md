@@ -40,7 +40,7 @@ npx tsx <plugin-root>/cli/src/index.ts create pages \
 ## Example
 
 ```bash
-npx tsx cli/src/index.ts create pages \
+npx tsx <plugin-root>/cli/src/index.ts create pages \
   --parent /home/MyCategory/MyGuide \
   --title "Getting Started" \
   --type reference \

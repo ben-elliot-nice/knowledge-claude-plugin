@@ -26,5 +26,5 @@ npx tsx <plugin-root>/cli/src/index.ts list pages --parent <path>
 ## Example
 
 ```bash
-npx tsx cli/src/index.ts list pages --parent /home/MyCategory
+npx tsx <plugin-root>/cli/src/index.ts list pages --parent /home/MyCategory
 ```
