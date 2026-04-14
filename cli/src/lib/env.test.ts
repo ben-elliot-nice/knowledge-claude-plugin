@@ -1,10 +1,14 @@
-import { describe, it, expect, afterEach } from 'vitest'
+import { describe, it, expect, afterEach, beforeEach } from 'vitest'
 import { writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { loadEnv, EnvMissingError } from './env.js'
 import os from 'node:os'
 
-const tmpDir = join(os.tmpdir(), 'knowledge-cli-test-' + Date.now())
+let tmpDir: string
+
+beforeEach(() => {
+  tmpDir = join(os.tmpdir(), 'knowledge-cli-test-' + Date.now() + '-' + Math.random().toString(36).slice(2))
+})
 
 afterEach(() => {
   try { rmSync(tmpDir, { recursive: true }) } catch {}
