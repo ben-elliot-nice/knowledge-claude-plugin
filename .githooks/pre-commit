@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LOCKFILE="skills/extract-knowledge/scripts/package-lock.json"
+
+if ! git diff --quiet "$LOCKFILE"; then
+  echo ""
+  echo "[pre-commit] ERROR: $LOCKFILE has unstaged changes."
+  echo "  Stage it:    git add $LOCKFILE"
+  echo "  Discard it:  git checkout $LOCKFILE"
+  exit 1
+fi
