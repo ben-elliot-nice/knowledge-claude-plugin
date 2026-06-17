@@ -1,5 +1,9 @@
 # Knowledge Claude Plugin
 
+## Git Worktrees
+
+Worktrees live at `.claude/worktrees/` (gitignored). Do not use `.worktrees/`.
+
 ## Rules
 
 - **After any change to `skills/`**, increment the version in `.claude-plugin/plugin.json`. Always patch increment unless directed otherwise (e.g. `1.0.0` → `1.0.1`).
