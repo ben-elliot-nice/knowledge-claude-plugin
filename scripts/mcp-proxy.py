@@ -25,7 +25,7 @@ import threading
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SERVER_DIR = REPO_ROOT / "server"
+SERVER_DIR = REPO_ROOT / "knowledge-vibe"
 SERVER_CMD = ["uv", "run", "--directory", str(SERVER_DIR), "knowledge-vibe"]
 
 

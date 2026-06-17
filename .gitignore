@@ -4,5 +4,5 @@ archive/
 .env
 .claude/settings.local.json
 .claude/worktrees/
-server/__pycache__/
-server/*.egg-info/
+knowledge-vibe/__pycache__/
+knowledge-vibe/*.egg-info/
