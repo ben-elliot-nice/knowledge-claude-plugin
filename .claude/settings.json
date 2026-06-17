@@ -1,0 +1,6 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledPlugins": {
+    "knowledge@private": true
+  }
+}
