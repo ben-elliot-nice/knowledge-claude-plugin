@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Hot-reload proxy for the knowledge MCP server.
+Hot-reload proxy for the knowledge-vibe MCP server.
 
 Sits between Claude Code (stdio) and the actual server subprocess. The proxy
 process stays alive indefinitely, so Claude Code never sees a disconnect.
@@ -26,7 +26,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SERVER_DIR = REPO_ROOT / "server"
-SERVER_CMD = ["uv", "run", "--directory", str(SERVER_DIR), "knowledge-mcp"]
+SERVER_CMD = ["uv", "run", "--directory", str(SERVER_DIR), "knowledge-vibe"]
 
 
 class HotReloadProxy:
