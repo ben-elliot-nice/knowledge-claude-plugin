@@ -4,3 +4,5 @@ archive/
 .env
 .claude/settings.local.json
 .claude/worktrees/
+server/__pycache__/
+server/*.egg-info/

@@ -19,11 +19,23 @@ claude plugin install knowledge@private
 
 ## Local Development Setup
 
-After cloning, register the git hooks:
+After cloning:
 
 ```bash
-git config core.hooksPath .githooks
+git config core.hooksPath .githooks   # register pre-commit hook
+cp .env.example .env                  # fill in credentials
+mise trust                            # allow mise to auto-source .env
 ```
+
+## MCP Dev Loop
+
+The proxy at `scripts/mcp-proxy.py` keeps Claude Code connected while you iterate on `server/`. After editing server source:
+
+```bash
+bash scripts/restart-mcp.sh
+```
+
+Then make any MCP tool call — the updated source is live.
 
 ## Development Workflow
 
