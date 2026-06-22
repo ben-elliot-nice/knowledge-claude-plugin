@@ -17,7 +17,39 @@ Call `explain` before brute-forcing or web-searching:
 
 ## Available topics
 
-_No topics defined yet. Add markdown files to `skills/explain/resources/`._
+
+**branding**
+- **expert-branding-logos** — Logo and icon upload in Expert — types, formats, size constraints, and upload path
+- **expert-css-admin** — Where and how to apply custom CSS in Expert — the six role-scoped fields, LESS vs CSS3, and key warnings
+- **expert-css-selectors** — Expert DOM structure, elm-* component classes, and columbia-* body targeting hooks — sourced from live HTML captures
+- **expert-css-variables** — LESS variables and known CSS class names available for Expert site customisation
+- **expert-html-regions** — HTML injection regions in Expert — DekiScript fields, template paths, and what each region supports
+- **expert-portal-audiences** — Multi-audience portal strategy in Expert — how to serve agents and customers from one tenant, and when a second tenant is required
+- **expert-touchpoint-css** — Per-Touchpoint CSS customisation in Expert — where to apply it, scope, reuse, and known limitations
+
+**dekiscript**
+- **dekiscript-overview** — What DekiScript is, its execution model, and what it can and cannot do
+- **dekiscript-page-object** — The DekiScript page object — available properties and what is NOT accessible
+- **dekiscript-wiki-functions** — The wiki.* and web.* function namespaces — page queries, API access, HTTP fetch
+
+**editorai**
+- **tinymce-ai-injection** — Inject custom AI shortcuts into Expert's TinyMCE editor via template script — confirmed working, supports site-managed guidelines
+
+**expert-api**
+- **expert-api-auth** — Expert REST API authentication — Server API Token, HMAC-SHA256 signing, token format
+- **expert-api-pages** — Expert pages API — key endpoints, filtering, metadata fields, and include options
+- **expert-compliance-dashboard** — Architecture patterns for a compliance review dashboard in Expert — webhook-driven (recommended) and fallback options
+- **expert-review-manager** — Expert Review Manager — what it is, its UI-only nature, and what is not accessible via API
+- **expert-scheduled-publication** — Expert scheduled publish/unpublish feature — how it works, API endpoints, and constraints
+- **expert-versioning-navigation** — Pattern for cross-article version navigation in Expert — ISO date tags, webhook-driven metadata, DekiScript sidebar, and search scoping
+- **expert-webhooks** — Expert webhook system — supported events, payload headers, auth, retry, and idempotency
+
+**touchpoints**
+- **touchpoints-article-tagging** — What article tags and custom classifications do in Expert — and what they do NOT do for Touchpoints contextual surfacing
+- **touchpoints-content-ids** — Content ID indirection pattern for maintainable Touchpoints links — stable references that survive article relocations
+- **touchpoints-contextual-surfacing** — How contextual article surfacing works in the Embedded Contextual Help Touchpoint — always explicit JS, never automatic
+- **touchpoints-embed-install** — How to generate and install a Touchpoints embed script on a third-party web page
+- **touchpoints-f1-variant** — The Contextual Help (F1) Touchpoint — CSS class triggers, widget.open() API, and lifecycle events
 
 ## Usage
 
