@@ -27,6 +27,15 @@ Call `explain` before brute-forcing or web-searching:
 - **expert-portal-audiences** — Multi-audience portal strategy in Expert — how to serve agents and customers from one tenant, and when a second tenant is required
 - **expert-touchpoint-css** — Per-Touchpoint CSS customisation in Expert — where to apply it, scope, reuse, and known limitations
 
+**content-structure**
+- **gcf-classifications** — Custom classifications and tags in Expert — how they work, how they differ, and how to use them for Guide tabs, search filtering, and content management
+- **gcf-nesting-rules** — Exact allowed and prohibited nesting combinations in GCF — the rules that determine what can live under what
+- **gcf-overview** — What the Guided Content Framework is, why it exists, and how it enforces hierarchy during page creation
+- **gcf-page-ordering** — How Expert orders pages within a category or guide, and how to control sequence using URL prefixes or drag-and-drop
+- **gcf-page-types** — The five GCF page types — Category, Guide, Topic, How-To, Reference — their purpose, display options, and valid positions
+- **gcf-search** — How content hierarchy and metadata affect search discoverability in Expert — URL depth, titles, summaries, tags, and classifications
+- **ia-design** — Information architecture design principles for Expert — how to plan a category/guide structure that serves users, not internal org charts
+
 **dekiscript**
 - **dekiscript-overview** — What DekiScript is, its execution model, and what it can and cannot do
 - **dekiscript-page-object** — The DekiScript page object — available properties and what is NOT accessible
