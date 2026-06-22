@@ -1,0 +1,27 @@
+---
+name: explain
+description: Retrieve reference content for knowledge plugin topics before writing code or making API calls. Use when: (1) working with the Expert/Deki API, (2) building DekiScript components, (3) creating content structures or page hierarchies, (4) anything requiring platform-specific field names, endpoints, or patterns. Call with no topic for the full index.
+---
+
+# explain
+
+Retrieve reference content before writing code, making API calls, or building content structures for the knowledge plugin.
+
+## When to use
+
+Call `explain` before brute-forcing or web-searching:
+- Working with Expert (MindTouch / Deki REST API)
+- Building DekiScript components or custom views
+- Creating content structures, page hierarchies, or GCF taxonomy
+- Any implementation where exact field names, endpoints, or patterns matter
+
+## Available topics
+
+{{TOPIC_REGISTRY}}
+
+## Usage
+
+```
+/explain              → this index
+/explain <topic>      → full reference for that topic
+```

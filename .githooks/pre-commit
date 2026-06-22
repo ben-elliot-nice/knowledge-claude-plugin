@@ -10,3 +10,25 @@ if ! git diff --quiet "$LOCKFILE"; then
   echo "  Discard it:  git checkout $LOCKFILE"
   exit 1
 fi
+
+# --- explain topics sync ---
+EXPLAIN_RESOURCES_PATTERN='^(skills/explain/resources/|scripts/build_explain_topics\.py)'
+EXPLAIN_GENERATED="skills/explain/SKILL.md"
+
+if git diff --cached --name-only | grep -qE "$EXPLAIN_RESOURCES_PATTERN"; then
+  echo "[pre-commit] explain resources changed — regenerating..."
+  uv run scripts/build_explain_topics.py
+  git add "$EXPLAIN_GENERATED"
+  echo "[pre-commit] $EXPLAIN_GENERATED staged."
+fi
+
+STAGED_RESOURCES=$(git diff --cached --name-only | grep -cE "$EXPLAIN_RESOURCES_PATTERN" || true)
+STAGED_GENERATED=$(git diff --cached --name-only | grep -c "skills/explain/SKILL\.md" || true)
+
+if [ "$STAGED_RESOURCES" -gt 0 ] && [ "$STAGED_GENERATED" -eq 0 ]; then
+  echo ""
+  echo "[pre-commit] ERROR: explain resources staged but SKILL.md is missing."
+  echo "  Run:   uv run scripts/build_explain_topics.py"
+  echo "  Stage: git add $EXPLAIN_GENERATED"
+  exit 1
+fi
