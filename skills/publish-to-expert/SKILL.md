@@ -55,7 +55,17 @@ POST /@api/deki/pages/={encoded-path}/contents
   ?edittime=now&allow=deleteredirects,idferrors&title={title}
 Content-Type: application/xml; charset=utf-8
 
-<content type="text/html" title="{title}"><body>{html}</body></content>
+<content type="text/html" title="{xmlTitle}"><body>{html}</body></content>
+```
+
+**XML-escape titles before interpolation.** Titles containing `&`, `"`, `<`, or `>` (common in enterprise content: "Sales & New Business", "Q&A") cause a 400 PageInvalidDocumentException if not escaped:
+
+```js
+const xmlTitle = title
+  .replace(/&/g, '&amp;')
+  .replace(/"/g, '&quot;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;');
 ```
 
 **2. PUT tags** (sets GCF type):
@@ -66,7 +76,14 @@ Content-Type: application/xml; charset=utf-8
 <tags><tag value="article:{type}" /></tags>
 ```
 
-Note: PUT tags **replaces** all tags. Safe on new pages; use caution on existing ones.
+Note: PUT tags **replaces all tags** in a single call. For pages needing both a GCF type tag and a classification tag (e.g. `article:howto` + `claims:process`), include all tags in one PUT — a second PUT call wipes the first:
+
+```
+<tags>
+  <tag value="article:howto" />
+  <tag value="claims:process" />
+</tags>
+```
 
 ## Page ID Encoding
 
@@ -91,14 +108,23 @@ Page IDs use `=` prefix + URI-encoded full path:
 
 ## Existence Check
 
-Before creating, GET the page and check for `virtual="true"`. Virtual = doesn't exist yet.
+Before creating, GET the page with `?include=revisions` and check for both `virtual="true"` and `revision count="0"`:
+
 ```js
 async function pageExists(pageId, token) {
-  const r = await fetch(`${BASE_URL}/@api/deki/pages/${pageId}`, { headers: { 'X-Deki-Token': token } });
+  const r = await fetch(`${BASE_URL}/@api/deki/pages/${pageId}?include=revisions`, {
+    headers: { 'X-Deki-Token': token }
+  });
   if (!r.ok) return false;
-  return !(await r.text()).includes('virtual="true"');
+  const text = await r.text();
+  if (text.includes('virtual="true"')) return false;   // page doesn't exist
+  if (text.includes('revision count="0"')) return false; // auto-created path stub
+  return true;
 }
 ```
+
+**Why check revision count:** when a child page is published to a path whose parent doesn't exist, Expert auto-creates the parent as a structural stub. These stubs do **not** contain `virtual="true"` — they appear as real pages in the API — but they have `revision count="0"`, no template body, and no GCF tag. Without the revision check, a re-run treats broken stubs as "already exists" and skips them silently, leaving the hierarchy broken.
+
 If page exists: **warn and skip**. Do not overwrite.
 
 ## Scripts
@@ -136,3 +162,15 @@ str.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
 - Which top-level path in Expert to publish under (the `parent`)
 - Whether a category already exists (skip category creation if so)
 - Any guide/category name overrides needed
+
+### Multi-level hierarchies and multiple article types
+
+The example manifest (`category → guide → pages[]`, all `reference`) covers the simplest case. Real GCF hierarchies often require:
+
+**Sub-categories (4+ levels):** `brand category → product category → guide → article`. Add intermediate category levels to the manifest or tree-walker before creating guides.
+
+**Multiple article types:** articles can be `reference`, `topic`, or `howto`. Use descriptor files or frontmatter (`GCF type: howto`) to determine per-article type rather than hardcoding `reference` for all.
+
+**Topic nesting:** a `topic` article can parent `howto`/`reference` children within a guide (`guide → topic → howto`). The existence check and path-encoding logic must handle this depth.
+
+**Directory-walker approach for large hierarchies:** for hierarchies too large to hand-manifest, write a tree-walker that reads `_category.md`, `_guide.md`, `_topic.md` descriptor files to determine page type and title, reads `GCF type:` frontmatter from article files, and builds the full publish queue. This is more reliable than a hand-authored manifest for 50+ page hierarchies.

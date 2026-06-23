@@ -44,15 +44,25 @@ Included on any article with the `versioning` classification. Queries the full v
 ```dekiscript
 {{
   if (map.contains(page.tags, 'versioning')) {
-    var slug = /* read version-set tag value from page.tags */;
-    var versions = wiki.getsearch('tag:version-set:' & slug, 50, '-version');
-    // first result = current (highest date), remainder = historical
-    foreach (var v in versions) {
-      <li><a href=(v.uri)>v.title</a></li>;
+    // page.tags values are lazy — use string.join to get real strings
+    var tagStr = string.join(map.keys(page.tags), "|");
+    var tags = string.split(tagStr, "|");
+    foreach (var tag in tags) {
+      if (string.contains(tag, "version-set:")) {
+        // do all work inside the foreach — outer variable mutation does not work
+        var slug = string.join(["", string.replace(tag, "version-set:", "")], "");
+        var versions = wiki.getsearch("tag:version-set:" & slug, 50, "-version");
+        // first result = current (highest date), remainder = historical
+        foreach (var v in versions) {
+          <li><a href=(v.uri)>v.title</a></li>;
+        }
+      }
     }
   }
 }}
 ```
+
+**Why the string.join wrapper:** `page.tags` values and `string.replace` return values are lazy-typed — concatenating them with `&` produces empty string. `string.join(["", value], "")` forces serialisation to a real string. See `dekiscript-gotchas` for full details.
 
 **Performance note:** `wiki.getsearch()` is slow — place this template only on versioned article pages, never in site-wide templates.
 
@@ -74,12 +84,10 @@ A custom search widget reads all available `version:YYYY-MM` tag values from the
 4. New publish → receiver writes `version:YYYY-MM` on new article
 5. Sidebar on both articles now reflects two versions; newest is current — no author action required
 
-### Open questions (pending webhook test)
+### Open questions (pending test)
 
-- Confirm `PageContent_Update` payload includes enough to identify classifications, or whether a follow-up API call is needed
-- Confirm Expert API endpoint and auth for writing tags (`PUT /@api/deki/pages/{id}/tags`)
-- Confirm `wiki.getsearch()` sorts correctly on `version:YYYY-MM` tag values
 - Confirm Expert search API supports tag faceting for date slider population
+- Confirm `wiki.getsearch()` sorts correctly on `version:YYYY-MM` tag values
 
 ### Related topics
 

@@ -60,11 +60,23 @@ Note: `wiki.api()` runs as the current user. If the current user lacks permissio
 if (map.contains(page.tags, 'lifecycle:expiring-30d')) {
   <span>Expiring soon</span>;
 }
-
-// Iterate all tags
-foreach (var tag in map.values(page.tags)) {
-  <span>tag.value</span>;
-}
 ```
 
 Tag classification format: `classification:value` (e.g., `stage:review`, `article:topic`, `lifecycle:expiring-30d`).
+
+**Warning — lazy types.** `map.keys(page.tags)` and `map.values(page.tags)` return lazy-typed objects. They render correctly as XML content but silently fail with all string operations (`string.startswith`, `string.substr`, `&` concatenation). The only reliable way to get real strings from tags is `string.join`:
+
+```dekiscript
+// Realise tags as a list of plain strings
+var tagStr = string.join(map.keys(page.tags), "|");
+var tags = string.split(tagStr, "|");
+// tags is now a list of real strings — string.contains and string.replace work
+foreach (var tag in tags) {
+  if (string.contains(tag, "version-set:")) {
+    var slug = string.replace(tag, "version-set:", "");
+    // use slug here — do all work inside this block (foreach scoping prevents outer mutation)
+  }
+}
+```
+
+See `dekiscript-gotchas` for the full set of lazy-type and foreach-scoping gotchas.

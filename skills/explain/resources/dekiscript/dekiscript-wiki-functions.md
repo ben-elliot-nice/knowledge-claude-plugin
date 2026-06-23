@@ -57,6 +57,25 @@ foreach (var pg in result['page']) {
 - Runs as the current user — publisher users cannot access Admin-only endpoints
 - Can call any documented `/@api/deki/` endpoint including `/pages/{id}/info`, `/pages/{id}/properties/{key}`
 
+**URI type requirement.** `wiki.api()` requires a URI type, not a plain string. Build URIs by starting with `site.api` (which is already a URI) — concatenating a string onto a URI produces a URI:
+
+```dekiscript
+// WRONG — TypeError: cannot convert from STR to URI
+wiki.api("/pages/" & page.id & "/tags")
+
+// CORRECT — site.api is a URI; URI & string → URI
+wiki.api(site.api & "pages/" & page.id & "/tags")
+```
+
+**`string.join` as lazy-type realiser.** When iterating XML node results or `page.tags` values, string operations silently fail on the lazy-typed objects returned. Use `string.join` to force them to real strings before string processing:
+
+```dekiscript
+var tagStr = string.join(map.keys(page.tags), "|");
+var tags = string.split(tagStr, "|");  // now plain strings
+```
+
+See `dekiscript-gotchas` for the full set of lazy-type gotchas.
+
 ### web.* — HTTP fetch functions
 
 All `web.*` functions are **GET-only**. No POST capability.

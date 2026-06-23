@@ -37,6 +37,7 @@ Call `explain` before brute-forcing or web-searching:
 - **ia-design** — Information architecture design principles for Expert — how to plan a category/guide structure that serves users, not internal org charts
 
 **dekiscript**
+- **dekiscript-gotchas** — DekiScript runtime gotchas — lazy types, foreach scoping, missing functions, and XML literal restrictions
 - **dekiscript-overview** — What DekiScript is, its execution model, and what it can and cannot do
 - **dekiscript-page-object** — The DekiScript page object — available properties and what is NOT accessible
 - **dekiscript-wiki-functions** — The wiki.* and web.* function namespaces — page queries, API access, HTTP fetch
@@ -46,7 +47,9 @@ Call `explain` before brute-forcing or web-searching:
 
 **expert-api**
 - **expert-api-auth** — Expert REST API authentication — Server API Token, HMAC-SHA256 signing, token format
+- **expert-api-draft-authoring** — Expert draft page authoring via API — two-call creation pattern, draft-only endpoints, and tag routing for unpublished pages
 - **expert-api-pages** — Expert pages API — key endpoints, filtering, metadata fields, and include options
+- **expert-api-xml-gotchas** — Expert API XML formatting gotchas — GET /tags response format, HTML entity encoding, and script-jem editor stripping
 - **expert-compliance-dashboard** — Architecture patterns for a compliance review dashboard in Expert — webhook-driven (recommended) and fallback options
 - **expert-review-manager** — Expert Review Manager — what it is, its UI-only nature, and what is not accessible via API
 - **expert-scheduled-publication** — Expert scheduled publish/unpublish feature — how it works, API endpoints, and constraints

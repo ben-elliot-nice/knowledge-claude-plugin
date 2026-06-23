@@ -1,7 +1,7 @@
 {
   "name": "knowledge",
   "description": "Knowledge base management skills for Claude Code",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": {
     "name": "Ben Elliot",
     "email": "ben.elliot@nice.com"
